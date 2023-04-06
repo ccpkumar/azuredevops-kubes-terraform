@@ -19,18 +19,23 @@ stages:
     steps:
     - bash: echo Build Second Job
 - stage: DevDeploy
+  dependsOn: Build
   jobs:
   - job: FirstJob
     steps:
     - bash: echo DEV First Job
 
 - stage: QADeploy
+  dependsOn: DevDeploy
   jobs:
   - job: FirstJob
     steps:
     - bash: echo QA First Job
 
 - stage: Proddeploy
+  dependsOn: 
+  - DevDeploy
+  - QADeploy
   jobs:
   - job: FirstJob
     steps:
